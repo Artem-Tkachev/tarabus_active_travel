@@ -47,3 +47,21 @@ export function Button({variant ="primary", text, Class="", type="submit", onCli
         </button>
     )
 }
+
+export function ButtonIcon({variant ="primary", text, Class="", type="submit", icon:Icon, onClick={}}){
+    return(
+        <div className="btn-wrapper">
+            {Icon && <Icon className="inp-icon inp-icon-left"/>}
+            <button className={`btn btn-icon-left btn-${variant} ${Class}`} type={type} onClick={onClick}>{text}</button>
+        </div>
+    )
+}
+
+export function DataInput({text, placeholder, onChange}){
+    return(
+        <div className="data-inp-wrapper">
+            <p className="data-inp-label">{text}</p>
+            <input placeholder={placeholder} className="data-inp" onChange={onChange}/>
+        </div>
+    )
+}
