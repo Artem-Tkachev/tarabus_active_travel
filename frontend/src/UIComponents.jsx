@@ -57,9 +57,9 @@ export function ButtonIcon({variant ="primary", text, Class="", type="submit", i
     )
 }
 
-export function DataInput({text, placeholder, onChange}){
+export function DataInput({text, placeholder, onChange, wrapperClass=""}){
     return(
-        <div className="data-inp-wrapper">
+        <div className={`data-inp-wrapper ${wrapperClass}`}>
             <p className="data-inp-label">{text}</p>
             <input placeholder={placeholder} className="data-inp" onChange={onChange}/>
         </div>

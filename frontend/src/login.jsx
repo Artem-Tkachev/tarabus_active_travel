@@ -25,7 +25,6 @@ export function Login(){
             <form onSubmit={loginSubmit}> 
                 <Input label={"[логин или email]"} placeholder={"admin@example.com"} icon={Mail} onChange={(e) => setLogin(e.target.value)}/>
                 <PasswordInput label={"пароль"} placeholder={"password"} icon={LockKeyholeIcon} onChange={(e) => setPassword(e.target.value)}/>
-                <Link>akssk</Link>
                 <Button text={"войти"} type="submit"/>
             </form>
         </div>
