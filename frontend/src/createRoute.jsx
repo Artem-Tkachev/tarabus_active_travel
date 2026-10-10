@@ -5,18 +5,55 @@ import { Link } from "react-router-dom";
 import "./createRoute.css";
 
 export function CreateRoute(){
+    const [message, setMessage] = useState(null);
+
     const [routeName, setRouteName] = useState();
     const [routeDiscription, setRouteDiscription] = useState();
     const [routeDates, setRouteDates] = useState();
     const [routePrice, setRoutePrice] = useState();
     const [routePlan, setRoutePlan] = useState();
 
-    const [routeCondtitions, setRouteConditions] = useState();
+    const [routeConditions, setRouteConditions] = useState();
     const [routeUnconditions, setRouteUnconditions] = useState();
 
-    const [participantsLimit, setParticipantsLimit] = useState();
-    const [difficulty, setDifficulty] = useState();
-    const [telegramLink, setTelegramLink] = useState();
+    const [routeLimit, setRouteLimit] = useState();
+    const [routeDifficulty, setRouteDifficulty] = useState();
+    const [routeLink, setRouteLink] = useState();
+    
+
+    async function SaveRoute(status){
+        const token = localStorage.getItem("token")
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/route`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+                "routeName": routeName,
+                "routeDiscription": routeDiscription,
+                "routeDates": routeDates,
+                "routePrice": routePrice,
+                "routePlan": routePlan,
+                "routeConditions": routeConditions,
+                "routeUnconditions": routeUnconditions,
+                "routeLimit": routeLimit,
+                "routeDifficulty": routeDifficulty,
+                "routeLink": routeLink,
+                "routeStatus": status
+            })
+        });
+
+        const data = await response.json();
+        console.log(data);
+        if(response.ok){
+            setMessage({type: "success", text: data.message})
+        }
+        else{
+            setMessage({type: "error", text: data.error})
+        }
+    }
 
     return(
         <div className="page">
@@ -93,17 +130,18 @@ export function CreateRoute(){
                         <div className="data-header">
                             <p>{"[ Настройки заезда ]"}</p>
                         </div>
-                        <DataInput text={"[ Лимит участников (мест) ]"} placeholder={"[ Лимит участников (мест) ]"} onChange={(e) => setParticipantsLimit(e.target.value)}/>
-                        <DataInput text={"[ Уровень сложности ]"} placeholder={"[ Уровень сложности ]"} onChange={(e) => setDifficulty(e.target.value)}/>
-                        <DataInput text={"[ Ссылка на пост в Telegram ]"} placeholder={"[ Ссылка на пост в Telegram ]"} onChange={(e) => setTelegramLink(e.target.value)}/>
+                        <DataInput text={"[ Лимит участников (мест) ]"} placeholder={"[ Лимит участников (мест) ]"} onChange={(e) => setRouteLimit(e.target.value)}/>
+                        <DataInput text={"[ Уровень сложности ]"} placeholder={"[ Уровень сложности ]"} onChange={(e) => setRouteDifficulty(e.target.value)}/>
+                        <DataInput text={"[ Ссылка на пост в Telegram ]"} placeholder={"[ Ссылка на пост в Telegram ]"} onChange={(e) => setRouteLink(e.target.value)}/>
                     </div>
 
                     <div className="publish-actions">
                         <div className="data-header">
                             <p>{"[ Публикация ]"}</p>
                         </div>
-                        <ButtonIcon text={"[ Создать и опубликовать ]"} icon={Save} variant="primary"/>
-                        <ButtonIcon text={"[ Сохранить как черновик ]"} icon={StickyNote} variant="secondary"/>
+                        {message && <p className={`save-message save-message-${message.type}`}>{message.text}</p>}
+                        <ButtonIcon text={"[ Создать и опубликовать ]"} icon={Save} variant="primary" onClick={() => {SaveRoute("published");}}/>
+                        <ButtonIcon text={"[ Сохранить как черновик ]"} icon={StickyNote} variant="secondary" onClick={() => {SaveRoute("draft");}}/>
                         <Link to="/routes" className="preview-link">{"[ Отмена ]"}</Link>
                     </div>
 
