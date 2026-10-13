@@ -10,7 +10,7 @@ export function EditRoute(){
 
     const {routes, loadRoutes} = useRoutes();
     const {routeID} = useParams();
-    
+
     useEffect(() => {
         if (routes === null) {
             loadRoutes();
@@ -41,7 +41,7 @@ export function EditRoute(){
     function findRoute(routeID){
         return routes.find((route) => route.id === Number(routeID))
     }
-    
+
 
     const route = routes ? findRoute(routeID) : null;
     useEffect(() => {
@@ -67,13 +67,13 @@ export function EditRoute(){
     }
 
     if (!route) {
-    return (
-        <div className="page">
-            <p>{"[ Поездка не найдена ]"}</p>
-            <Link to="/routes" className="breadcrumb-link">{"[ < Назад к списку поездок ]"}</Link>
-        </div>
-    );
-}
+        return (
+            <div className="page">
+                <p>{"[ Поездка не найдена ]"}</p>
+                <Link to="/routes" className="breadcrumb-link">{"[ < Назад к списку поездок ]"}</Link>
+            </div>
+        );
+    }
 
     async function SaveRoute(status){
         const token = localStorage.getItem('token');
@@ -107,11 +107,12 @@ export function EditRoute(){
         }
     }
 
-    async function deleteRoute() {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/route/${routeID}`, {
+    // раньше это была безвозвратная DELETE — теперь перемещаем поездку в архив (PUT .../archive),
+    // откуда её можно восстановить на странице /routes/archive
+    async function archiveRoute() {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/route/${routeID}/archive`, {
             method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         })
@@ -239,7 +240,7 @@ export function EditRoute(){
                         <ButtonIcon text={"[ Сохранить изменения ]"} icon={Save} variant="primary" onClick={() => SaveRoute("published")}/>
                         <ButtonIcon text={"[ Сохранить как черновик ]"} icon={StickyNote} variant="secondary" onClick={() => SaveRoute("draft")}/>
                         <Link to={""} className="preview-link">{"[ Предпросмотр на сайте ]"} <SquareArrowOutUpRight size={16}/></Link>
-                        <ButtonIcon text={"[ ! ] [ Удалить поездку ]"} icon={TrashIcon} variant="danger" onClick={() => { if (window.confirm("Удалить поездку без возможности восстановления?")) deleteRoute(); }}/>                    </div>
+                        <ButtonIcon text={"[ Архивировать поездку ]"} icon={TrashIcon} variant="danger" onClick={() => { if (window.confirm("Переместить поездку в архив? Её можно будет восстановить из раздела «Архив».")) archiveRoute(); }}/>                    </div>
 
                     <div className="sync-note">
                         <p className="sync-note-title">{"[ i ] [ Справка по синхронизации ]"}</p>

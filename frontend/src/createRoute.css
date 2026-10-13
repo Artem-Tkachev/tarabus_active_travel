@@ -209,6 +209,7 @@ a {
     width: 100%;
     cursor: pointer;
     font-family: inherit;
+    box-sizing: border-box;
 }
 .btn:hover {
     opacity: 0.85;

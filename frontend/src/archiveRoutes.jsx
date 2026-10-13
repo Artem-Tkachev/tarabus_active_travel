@@ -18,9 +18,16 @@ export function ArchiveRoutes(){
 
     const archivedRoutes = routes.filter(route => route.archived === 1);
 
-    function restoreRoute(routeID){
-        // TODO: сюда запрос PUT /api/route/<id>/restore (не забыть Authorization header),
-        // а после успешного ответа — await loadRoutes(), чтобы список обновился
+    async function restoreRoute(routeID){
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/route/${routeID}/restore`, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+        if(response.ok){
+            await loadRoutes();
+        }
     }
 
     function archiveRow(route){

@@ -1,0 +1,169 @@
+/* ---- Хлебные крошки ---- */
+.bk-breadcrumb-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.bk-breadcrumb-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.bk-meta {
+    font-size: 13px;
+    color: #555;
+}
+
+/* ---- Заголовок ---- */
+.bk-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    margin: 0 0 6px 0;
+}
+.bk-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.bk-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+.bk-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ---- Ссылка на Telegram-пост ---- */
+.bk-telegram-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 1px solid #000;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+.bk-telegram-row a {
+    text-decoration: underline;
+}
+
+/* ---- Кнопки произвольной ширины (переопределяют width:100% у .btn) ---- */
+.bk-btn-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    white-space: nowrap;
+}
+
+/* ---- Фильтр по статусу ---- */
+.bk-status-select {
+    border: 1px solid #000;
+    background: #fff;
+    padding: 6px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* ---- Таблица бронирований ---- */
+.bookings-table {
+    border: 1px solid #000;
+    margin-top: 16px;
+}
+.bookings-table-header, .booking-row {
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 1.6fr 1.2fr 1.6fr 1.3fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #000;
+}
+.bookings-table-header {
+    font-size: 12px;
+    font-weight: bold;
+    background: #f5f5f5;
+}
+.booking-row:last-child {
+    border-bottom: none;
+}
+.booking-cell {
+    min-width: 0;
+}
+.booking-name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.booking-sub {
+    margin: 2px 0 0 0;
+    font-size: 12px;
+    color: #777;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.booking-contacts-cell p {
+    margin: 0;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.booking-date-cell, .booking-comment-cell {
+    font-size: 13px;
+}
+.bk-empty {
+    padding: 20px 16px;
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+}
+
+/* ---- Футер с рассылкой ---- */
+.bk-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-top: 1px solid #000;
+    padding-top: 16px;
+    margin-top: 16px;
+}
+.bk-footer-note {
+    font-size: 13px;
+    color: #555;
+    margin: 0;
+    max-width: 480px;
+}
+.bk-broadcast-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    background: #111;
+    color: #fff;
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .bookings-table-header {
+        display: none;
+    }
+    .booking-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}

@@ -49,14 +49,17 @@ export function AdminDashboard(){
                 </div>
                 <div className="route-cell route-actions-cell">
                     <Link to={`/routes/${route.id}/edit`} className="action-link">{"Редактировать"}</Link>
-                    <Link to="/routes/1/bookings" className="action-btn">{"Записавшиеся (6)"}</Link>
+                    <Link to={`/routes/${route.id}/bookings`} className="action-btn">{"Записавшиеся"}</Link>
                 </div>
             </div>
         )
     }
 
-    const routesNumber = routes.length;
-    const filteredRoutes = activeFilter === "all" ? routes : routes.filter(route => route.routeStatus === activeFilter);
+    // архивные поездки сюда не попадают — для них отдельная страница /routes/archive
+    const visibleRoutes = routes.filter(route => route.archived !== 1);
+
+    const routesNumber = visibleRoutes.length;
+    const filteredRoutes = activeFilter === "all" ? visibleRoutes : visibleRoutes.filter(route => route.routeStatus === activeFilter);
 
     return(
         <div className="routes-page">
@@ -72,10 +75,10 @@ export function AdminDashboard(){
 
             <div className="sorting-block">
                 <div className="filter-tabs">
-                    <button className={`filter-tab ${activeFilter === "all" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("all")}>{`[ Все (${routes.length}) ]`}</button>
-                    <button className={`filter-tab ${activeFilter === "published" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("published")}>{`[ Опубликованные (${routes.filter(r => r.routeStatus === "published").length}) ]`}</button>
-                    <button className={`filter-tab ${activeFilter === "draft" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("draft")}>{`[ Черновики (${routes.filter(r => r.routeStatus === "draft").length}) ]`}</button>
-                    <button className={`filter-tab ${activeFilter === "past" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("past")}>{`[ Прошедшие (${routes.filter(r => r.routeStatus === "past").length}) ]`}</button>
+                    <button className={`filter-tab ${activeFilter === "all" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("all")}>{`[ Все (${visibleRoutes.length}) ]`}</button>
+                    <button className={`filter-tab ${activeFilter === "published" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("published")}>{`[ Опубликованные (${visibleRoutes.filter(r => r.routeStatus === "published").length}) ]`}</button>
+                    <button className={`filter-tab ${activeFilter === "draft" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("draft")}>{`[ Черновики (${visibleRoutes.filter(r => r.routeStatus === "draft").length}) ]`}</button>
+                    <button className={`filter-tab ${activeFilter === "past" ? "filter-tab-active" : ""}`} onClick={() => setActiveFilter("past")}>{`[ Прошедшие (${visibleRoutes.filter(r => r.routeStatus === "past").length}) ]`}</button>
                 </div>
                 <div className="search-box">
                     <Search size={16}/>
